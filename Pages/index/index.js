@@ -132,20 +132,13 @@ function search() {
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
         SELECT DISTINCT ?tel ?label ?thumbnail WHERE {
-            {
-                ?tel a dbo:Device; 
-                    dbo:abstract ?abstract;
-                    dbp:cpu ?cpu.
-                FILTER (regex(?abstract, "smartphone", "i")).
-            }
-            UNION
-            {
-                ?tel dbp:type dbr:Smartphone;
-                dbo:abstract ?abstract.       
-            }
-            ?tel rdfs:label ?label.
-            FILTER (lang(?abstract) = "en").
-            FILTER (lang(?label) = "en").   
+
+            ?tel a dbo:Device ;
+            dbo:wikiPageWikiLink dbr:Smartphone.
+
+
+            ?tel rdfs:label ?label .
+            FILTER (lang(?label) = "en") .
             FILTER (regex(?label, ".*${searchTxt}.*", "i")).
             OPTIONAL { ?tel dbo:thumbnail ?thumbnail }
         }
